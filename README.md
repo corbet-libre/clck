@@ -65,4 +65,4 @@ It holds no session lock, binds no keyboard or pointer, and shares no code with 
 `BEHAVIORS.md`). It decides nothing: whoever knows when the seat is idle or away sends the command. Frame clients (cksk)
 stream to its own `live_socket_path`, never to the locker's socket.
 
-License: FSL-1.1-ALv2, see `LICENSE.md`.
+License: LGPL-3.0-only WITH LGPL-3.0-linking-exception, see `LICENSE.md`.

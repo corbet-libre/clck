@@ -29,10 +29,10 @@ allow = [
   "Zlib",
 ]
 exceptions = [
-  # clck itself is source-available until each release
-  # date. Keeping this crate-specific prevents another FSL dependency from
-  # entering unnoticed.
-  { crate = "clck", allow = ["FSL-1.1-ALv2"] },
+  # clck itself is LGPL-3.0-only WITH LGPL-3.0-linking-exception; this
+  # crate-specific exception keeps another copyleft dependency from entering
+  # unnoticed.
+  { crate = "clck", allow = ["LGPL-3.0-only"] },
 
 
 ]
