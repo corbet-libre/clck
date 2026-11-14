@@ -8,7 +8,7 @@ pkgrel=1
 pkgdesc="Wayland session locker with live kiosk outputs"
 arch=('x86_64')
 url="https://git.corbet.ch/corbet-fsl/clck"
-license=('LicenseRef-FSL-1.1-ALv2')
+license=('LGPL-3.0-only WITH LGPL-3.0-linking-exception')
 depends=('pam' 'wayland' 'libxkbcommon')
 # clang: pam-sys generates its PAM bindings with bindgen (libclang) at build time.
 makedepends=('cargo' 'git' 'clang')
