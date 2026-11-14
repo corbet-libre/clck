@@ -136,7 +136,7 @@ socket path during startup but does not unlink or bind it until the compositor e
 `$XDG_RUNTIME_DIR/clck.sock`, or `clck kioskd`'s live socket, `KIOSKD-4`), **THEN** nixlock sends
 nothing on it and reads a stream of Netpbm PAM (`P7`) images: `TUPLTYPE RGB_ALPHA` with `DEPTH 4`
 (straight alpha, premultiplied on receipt) or `TUPLTYPE RGB` with `DEPTH 3`, `MAXVAL 255`, `WIDTH`
-and `HEIGHT` each `1..=8192`, a header of at most 1 KiB, then exactly `WIDTH * HEIGHT * DEPTH`
+and `HEIGHT` each `1..=8192` with at most 64 MiB of pixels, a header of at most 1 KiB, then exactly `WIDTH * HEIGHT * DEPTH`
 raster bytes. It closes the connection when the peer is not the same user (`SO_PEERCRED`, checked
 before the connection may replace the current one), on any other header, and when an image whose
 first byte has arrived is not complete within 10 s. While no kiosk output exists, images are read

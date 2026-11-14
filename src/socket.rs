@@ -6,7 +6,7 @@
 //!   - the server writes NOTHING on the socket: no greeting, no reply. A client connects and writes images.
 //!   - the stream is a sequence of PAM (`P7`) images, each a header and then exactly `WIDTH * HEIGHT * DEPTH` raster
 //!     bytes. `crate::netpbm` holds what is accepted: `TUPLTYPE RGB_ALPHA` with `DEPTH 4` (straight alpha) or
-//!     `TUPLTYPE RGB` with `DEPTH 3`, `MAXVAL 255`, a header of at most 1 KiB, `WIDTH` and `HEIGHT` each `1..=8192`.
+//!     `TUPLTYPE RGB` with `DEPTH 3`, `MAXVAL 255`, a header of at most 1 KiB, `WIDTH` and `HEIGHT` each `1..=8192`, at most 64 MiB of pixels.
 //!     Anything else closes the connection: a byte stream cannot be resynchronized after an image it does not understand.
 //!   - the peer must be this process's own user (`SO_PEERCRED`); any other is closed at once, before it can replace the
 //!     current client.

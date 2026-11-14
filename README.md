@@ -29,7 +29,7 @@ images, one after another, for as long as it likes.
   top-down.
 - Accepted: `TUPLTYPE RGB_ALPHA` with `DEPTH 4` (straight alpha, not premultiplied) or
   `TUPLTYPE RGB` with `DEPTH 3`, both with `MAXVAL 255`.
-- Limits: the header is at most 1 KiB; `WIDTH` and `HEIGHT` are each 1 to 8192; once an image's
+- Limits: the header is at most 1 KiB; `WIDTH` and `HEIGHT` are each 1 to 8192 and the image at most 64 MiB (4096x4096); once an image's
   first byte has arrived, the whole image must arrive within 10 s. Anything else closes the
   connection.
 - Same user only: a client whose user id (from the kernel, `SO_PEERCRED`) is not clck's own is

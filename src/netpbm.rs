@@ -26,6 +26,9 @@ pub const MAX_HEADER: usize = 1024;
 /// `WIDTH` and `HEIGHT` are each `1..=MAX_SIDE`.
 pub const MAX_SIDE: u32 = 8192;
 
+/// The decoded image (`WIDTH * HEIGHT * 4` bytes) is at most this large: 64 MiB, room for 4096x4096.
+pub const MAX_IMAGE_BYTES: usize = 64 * 1024 * 1024;
+
 /// The two tuple types the kiosk accepts.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Tuple {
@@ -178,6 +181,11 @@ pub fn read_header<R: BufRead>(r: &mut R) -> Result<Header, Error> {
     if !side.contains(&width) || !side.contains(&height) {
         return Err(refused(format!(
             "{width}x{height}: WIDTH and HEIGHT must each be 1..={MAX_SIDE}"
+        )));
+    }
+    if width as usize * height as usize * 4 > MAX_IMAGE_BYTES {
+        return Err(refused(format!(
+            "{width}x{height}: the image would exceed {MAX_IMAGE_BYTES} bytes"
         )));
     }
     if maxval != 255 {
@@ -336,7 +344,13 @@ mod tests {
                 "P7\nWIDTH {w}\nHEIGHT {h}\nDEPTH 4\nMAXVAL 255\nTUPLTYPE RGB_ALPHA\nENDHDR\n"
             ))
         };
-        assert!(at("8192", "8192").is_ok());
+        assert!(at("8192", "2048").is_ok(), "exactly 64 MiB is accepted");
+        assert!(at("4096", "4096").is_ok());
+        assert!(at("8192", "8192").is_err(), "256 MiB is refused");
+        assert!(
+            at("8192", "2049").is_err(),
+            "one row over 64 MiB is refused"
+        );
         assert!(at("1", "1").is_ok());
         for (w, h) in [("8193", "1"), ("1", "8193"), ("0", "1"), ("1", "0")] {
             assert!(
